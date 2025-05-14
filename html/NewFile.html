@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<h1>ff</h1>
+
+
+<script>//우선순위는 익명적>선언적 같은 이름의 함수가 있다면 익명적을 실행한다. 
+
+/*
+ * 자바스크립트 내장함수
+   1.타이머
+   2.z코드실행함수
+   3.숫자 변환함수
+ */
+
+
+// 선언적 함수 선언
+	function aaa() {
+		alert('call aaa()')
+	}
+	
+	// 익명적 함수 선언
+	let bbb = function () {
+		alert('call bbb()')
+	}
+	
+	var ccc = function() {
+		alert('익명함수 ccc()sss 호출...')
+	}
+	
+	function ccc() {
+		alert('call ccc()')
+	}
+	function callbackF(F){
+		F()
+	}
+	function returnfunc(name){
+		let msg = `===${name}===\n`
+		return function(){
+			alert(`${msg}하이여 ${name}`)
+		}
+	}
+	let f = returnfunc('홍길동동')
+	f()
+	setInterval
+	
+	callbackF(aaa)
+	callbackF(bbb)
+	callbackF(function (){	alert('다양한 방법으로 호출하기')})
+	
+	setTimeout(function() {
+		alert('1초가 지났다!!!')
+	}, 1000)
+	
+</script>
+</head>
+<body>
+
+</body>
+</html>

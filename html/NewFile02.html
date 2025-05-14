@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+	/*
+		자바스크립트 내장함수
+		1. 타이머
+			setTimeout(함수, ms)
+			setInterval(함수, ms)
+			clearInterval(id)
+			clearTimeout(id)
+		2. 코드 실행함수
+			eval("")
+		3. 숫자변환함수
+			parseInt("")
+			parseFloat("")
+	*/
+ 
+	/*
+	setTimeout(function() {
+		alert('3초가 지났다...')
+	}, 3000)
+	*/
+	
+	let id = setInterval(function() {
+		document.write(`현재시간 : ${ new Date() } + <br>`)
+	}, 1000)
+	
+	setTimeout(function() {
+		clearInterval(id)	
+	}, 10000 + 1000)
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
+

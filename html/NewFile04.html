@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	let state = new Array()
+	state['서초'] = '서울특별시'
+	state['성남'] = '경기도'
+	
+	console.log(state)
+	
+	for(let idx in state){
+		document.write(`${idx}:${state[idx]}<br>`)
+	}
+	
+	document.write('<hr>')
+	
+	let person = new Array()
+	person['name'] = '홍길동'
+	person['phone'] = '010-1111-2222'
+	person['addr'] = '경기도 성남시 수정구'
+	person.gender = 'M'
+	
+	for(let key in person) {
+		document.write(`${key} : ${ person[key] }<br>`)
+	}
+	
+	
+</script>
+</head>
+<body>
+
+</body>
+</html>

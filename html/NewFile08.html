@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+
+	let person1 = {
+			name : '엄준식'
+			,phone: '010-1111-2222'
+	}
+	
+	let person2 = {
+			name: '엄복동'
+			, phone: '010-5555-6666'
+			, addr: '경기'
+	} 
+
+	let persons = [person1, person2]
+	
+	persons.push({
+		kor: 100
+		, eng: 70
+		, math : 89
+	})
+	
+	for(let p of persons) {
+		console.log(p)
+		for(let key in p) {
+			document.write(`${ key } : ${ p[key] }<br>`)
+		}
+		document.write('<hr>')
+	}
+</script>
+</head>
+<body>
+
+</body>
+</html>
+
+

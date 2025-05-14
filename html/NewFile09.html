@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	
+let x=10;
+	
+	setInterval(function() {
+		
+		let sub = window.open("", "", "width=2000, height=2000")
+		if(!sub) {
+			alert('팝업창 옵션을 체크하세요!!!')
+		}
+			sub.moveTo(x, x)
+			x=x+x
+	}, 1000)
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	table {
+		width: 200px;
+		height: 150px;
+	}
+	table, tr, td {
+		border: 1px groove black;
+	}
+</style>
+<script>
+	window.onload = function() {
+		let tags = document.getElementsByTagName("td")
+		tags[0].innerHTML = '아이디'
+			tags[1].innerHTML = '비번'
+			
+				let idTag = document.querySelector('#em')
+				idTag.innerHTML = '이메일'
+	}
+</script>
+</head>
+<body>
+	<table >
+		<tr>
+			<td>ID</td>
+		</tr>
+		<tr>
+			<td>PASSWORD</td>
+		</tr>
+		<tr>
+			<td id='em' >e-mail</td>
+		</tr>
+	</table>
+</body>
+</html>
+
+

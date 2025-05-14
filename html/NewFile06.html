@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	let array = [10, 7, 5, 234, 59, 46]
+	
+	/*
+	let copyArray = [...array]
+	for(let i in copyArray)
+		copyArray[i] += 500
+	*/
+	
+	let copyArray = array.map(function(element) {
+		return element + 500
+	})
+			
+	document.write(`array : ${ array }<br>`)
+	document.write(`copyArray : ${ copyArray }<br>`)
+	
+	document.write(`array : ${ array }<br>`)
+	array.sort()
+	document.write(`sort() => array : ${ array }<br>`)
+	
+	document.write(`array : ${ array }<br>`)
+	array.sort(function(left, right) {
+		return left-right //ritght - left 하면 내림차순 
+	})
+	document.write(`sort() => array : ${ array }<br>`)
+</script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

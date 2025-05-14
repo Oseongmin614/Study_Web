@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	.circle {
+		background-color: #A39E27;
+		width: 200px;
+		height: 200px;
+		margin: 10px;
+		border-radius: 50%;
+		left: 100px;
+		top: 100px;
+		position: relative;
+		text-align: center;
+	}
+	
+	#style01 {
+		border: 10px dotted lime;
+		/*
+		border-color: orange;
+		border-width: 3px;
+		border-style: solid;
+		*/
+	}
+	
+	.red {
+		background-color: red
+	}
+	
+	.blue {
+		background-color: blue
+	}
+</style>
+<script>
+/*
+	if(confirm('네이버로 이동할까요?')) {
+		location.href = 'http://www.naver.com'
+	}
+*/	
+
+	function goDaum() {
+		location.href = 'http://www.daum.net'
+	}
+	
+	window.onload = function() {
+		let btn = document.getElementById("btnDaum")
+		btn.onclick = function() {
+			location.href = 'http://www.daum.net'
+		}
+	}
+</script>
+</head>
+<body>
+	
+	hello<br>
+	hello<br>
+	<div class="circle"></div>
+	hello<br>
+	hello<br>
+	hello<br>
+	hello<br>
+	hello<br>
+	<div id="style01">
+		<a href="http://www.naver.com"><button>네이버로 이동하기</button></a>
+		<!-- <button onclick="goDaum()">Daum로 이동하기</button> -->
+		<button id="btnDaum">Daum로 이동하기</button>
+		<div class="circle red">빨간공</div>
+		<div class="circle blue">파랑공</div>
+	</div>
+	<br>
+</body>
+</html>
