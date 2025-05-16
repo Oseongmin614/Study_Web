@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>세계 도시 시계</title>
+  <style>
+   
+	img {
+	  width: 100%;
+	  height: 100%;
+	}
+    svg {
+      width: 100%;
+      height: auto;
+      max-height: 400px;
+    }
+
+    polygon {
+      fill: #999;
+      stroke: #333;
+      stroke-width: 1;
+      fill-opacity: 0.6;
+      transition: fill-opacity 0.3s;
+      cursor: pointer;
+    }
+
+    polygon:hover {
+      fill-opacity: 1;
+    }
+
+    #city-display {
+      margin-top: 15px;
+      font-size: 20px;
+      white-space: pre-line;
+    }
+
+    /* 모달 스타일 */
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #modal > div {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    #modal button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>도시를 클릭하면 현재 시간을 볼 수 있습니다</h2>
+<img src="./img_map_wrdtm_v.jpg" alt="세계 지도">
+  <!-- 지도 (샘플로 간단한 polygon 사용) -->
+  <svg viewBox="0 0 1500 700">
+    <polygon id="london" points="103,209 103,249 143,249 143,209" onmouseover="showCityName('london')" onmouseout="clearCityName()" onclick="showModal('london')" />
+    <polygon id="moscow" points="250,200 250,220 270,220 270,200" onmouseover="showCityName('moscow')" onmouseout="clearCityName()" onclick="showModal('moscow')" />
+    <polygon id="capetown" points="207,520 207,540 247,540 247,520" onmouseover="showCityName('capetown')" onmouseout="clearCityName()" onclick="showModal('capetown')" />
+    <polygon id="korea" points="620,310 630,300 632,280 617,285" onmouseover="showCityName('korea')" onmouseout="clearCityName()" onclick="showModal('korea')" />
+    <polygon id="beijing" points="590,320 600,310 602,290 587,295" onmouseover="showCityName('beijing')" onmouseout="clearCityName()" onclick="showModal('beijing')" />
+    <polygon id="sydney" points="700,500 700,520 720,520 720,500" onmouseover="showCityName('sydney')" onmouseout="clearCityName()" onclick="showModal('sydney')" />
+    <polygon id="newyork" points="1247,241 1247,261 1267,261 1267,241" onmouseover="showCityName('newyork')" onmouseout="clearCityName()" onclick="showModal('newyork')" />
+    <polygon id="vancouver" points="1010,220 1010,240 1030,240 1030,220" onmouseover="showCityName('vancouver')" onmouseout="clearCityName()" onclick="showModal('vancouver')" />
+    <polygon id="saopaulo" points="1306,501 1306,541 1326,541 1326,501" onmouseover="showCityName('saopaulo')" onmouseout="clearCityName()" onclick="showModal('saopaulo')" />
+  </svg>
+
+  <!-- 도시 이름 표시 -->
+  <div id="city-display"></div>
+
+  <!-- 모달 구조 -->
+  <div id="modal">
+    <div>
+      <button onclick="closeModal()">닫기</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- 스크립트 -->
+  <script>
+    const cityDisplay = document.getElementById('city-display');
+
+    const cityNames = {
+      'saopaulo': '상파울로',
+      'london': '런던',
+      'sydney': '시드니',
+      'capetown': '케이프타운',
+      'vancouver': '벤쿠버',
+      'moscow': '모스크바',
+      'korea': '한국',
+      'beijing': '베이징',
+      'newyork': '뉴욕'
+    };
+
+    const citytime = {
+      'saopaulo': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/상-파울로-브라질/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>',
+      'london': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/런던-영국/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>',
+      'sydney': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/시드니-오스트레일리아/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>',
+      'capetown': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/희망봉/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>',
+      'vancouver': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/Vancouver_CA/벤쿠버/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>',
+      'moscow': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/모스크바-러시아/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>',
+      'korea': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/서울/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>',
+      'beijing': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/베이징-중국/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>',
+      'newyork': '<iframe width="475" height="250" src="https://vclock.kr/embed/time/뉴욕-미국/#theme=0&ampm=1&showdate=1" frameborder="0" allowfullscreen></iframe>'
+    };
+
+    function showCityName(city) {
+      cityDisplay.textContent = cityNames[city];
+    }
+
+    function clearCityName() {
+      const citiesInOrder = [
+        '런던',
+        '모스크바',
+        '케이프타운',
+        '한국',
+        '베이징',
+        '시드니',
+        '뉴욕',
+        '벤쿠버',
+        '상파울로'
+      ];
+      cityDisplay.innerHTML = `도시에 마우스를 올려보세요<br>도시 목록: ${citiesInOrder.join(', ')}`;
+    }
+
+    function showModal(city) {
+      const modal = document.getElementById('modal');
+      const modalContent = document.getElementById('modal-content');
+      modalContent.innerHTML = citytime[city];
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      const modalContent = document.getElementById('modal-content');
+      modal.style.display = 'none';
+      modalContent.innerHTML = '';
+    }
+
+    // 초기 메시지
+    clearCityName();
+  </script>
+</body>
+</html>

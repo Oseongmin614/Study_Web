@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>세계 주요 도시 지도</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <img src="./img_map_wrdtm_v.jpg" alt="세계 지도">
+    <svg viewBox="0 0 1500 700">
+      <!-- 도시들 -->
+      <polygon id="vancouver" points="1010,220 1010,240 1030,240 1030,220" onclick="showAlert('vancouver')" onmouseover="showCityName('vancouver')" onmouseout="clearCityName()" />
+      <polygon id="moscow" points="250,200 250,220 270,220 270,200" onclick="showAlert('moscow')" onmouseover="showCityName('moscow')" onmouseout="clearCityName()" />
+      <polygon id="korea" points="620,310 630,300 632,280 617,285" onclick="showAlert('korea')" onmouseover="showCityName('korea')" onmouseout="clearCityName()" />
+      <polygon id="beijing" points="590,320 600,310 602,290 587,295" onclick="showAlert('beijing')" onmouseover="showCityName('beijing')" onmouseout="clearCityName()" />
+      <polygon id="sydney" points="700,500 700,520 720,520 720,500" onclick="showAlert('sydney')" onmouseover="showCityName('sydney')" onmouseout="clearCityName()" />
+      <polygon id="saopaulo" points="1306,501 1306,541 1326,541 1326,501" onclick="showAlert('saopaulo')" onmouseover="showCityName('saopaulo')" onmouseout="clearCityName()" />
+      <polygon id="paris" points="103,209 103,249 143,249 143,209" onclick="showAlert('paris')" onmouseover="showCityName('paris')" onmouseout="clearCityName()" />
+      <polygon id="capetown" points="207,520 207,540 247,540 247,520" onclick="showAlert('capetown')" onmouseover="showCityName('capetown')" onmouseout="clearCityName()" />
+      <polygon id="newyork" points="1247,241 1247,261 1267,261 1267,241" onclick="showAlert('newyork')" onmouseover="showCityName('newyork')" onmouseout="clearCityName()" />
+    </svg>
+  </div>
+
+  <h3 id="city-display">도시에 마우스를 올려보세요</h3>
+
+  <script src="script.js"></script>
+</body>
+</html>

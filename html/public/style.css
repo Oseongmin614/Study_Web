@@ -1,0 +1,84 @@
+.container {
+  position: relative;
+  width: 1500px;
+  height: 700px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+polygon {
+  cursor: pointer;
+  fill-opacity: 0;
+  transition: fill-opacity 0.3s ease;
+}
+
+polygon:hover {
+  fill-opacity: 0.5; 
+}
+
+#saopaulo {
+  fill: rgba(0, 255, 0, 1);
+}
+
+#paris {
+  fill: rgba(255, 0, 0, 1);
+}
+
+#sydney {
+  fill: rgba(0, 0, 255, 1);
+
+}
+
+#capetown {
+  fill: rgba(255, 255, 0, 1);
+}
+
+#vancouver {
+  fill: rgba(255, 0, 255, 1);
+}
+
+#moscow {
+  fill: rgba(0, 255, 255, 1);
+}
+
+#korea {
+  fill: rgba(128, 0, 128, 1);
+}
+
+#beijing {
+  fill: rgba(255, 165, 0, 1);
+}
+
+#newyork {
+  fill: rgba(165, 42, 42, 1);
+}
+
+h3#city-display {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #333;
+}
+.modal-dialog {
+  max-width: 500px;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-body iframe {
+  max-width: 100%;
+}
