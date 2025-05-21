@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	table {
+		width: 200px;
+		height: 150px;
+	}
+	table, tr, td {
+		border: 1px groove black;
+	}
+</style>
+<script>
+	window.onload = function() {
+		let idTag = document.querySelector('#id')	
+//		idTag.parentNode.removeChild(idTag)
+		idTag.remove()
+		
+		
+		let pwdTag = document.querySelector('.pwd')
+		pwdTag.style.color = 'red'
+	//	pwdTag.style.border = '2px dotted blue'
+	//	pwdTag.styled['font-size'] = '20pt'	
+		let btn = document.querySelector('#btn01')
+		btn.onclick = function(){
+			alert('클릭했습둥btn01 ')
+		}	
+	
+		
+		 //표준이벤트 모델 addEventListener(이벤트속성, handler)
+		let btn3 = document.getElementById("btn03")
+		btn3.addEventListener('click', function(){
+			alert('btn 3번실행했습댜')
+		})
+	}
+</script>
+</head>
+<body>
+	<table >
+		<tr>
+			<td id="id">ID</td>
+		</tr>
+		<tr>
+			<td class="pwd" >PASSWORD</td>
+		</tr>
+	</table>
+	
+	<button onclick="alert('1클릭했습둥')" >버튼</button>
+	<button id = btn01>버튼01</button>
+	<button id = btn02>버튼02</button>
+	<button id = btn03>버튼03</button>
+	<button id = btn04>버튼04</button>
+	<button id = btn05>버튼05</button>
+	<button id = btn06>버튼06</button>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

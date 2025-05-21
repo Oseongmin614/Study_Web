@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script >
+	let makePerson =function(name,phone){
+		let person = {
+				name:name
+				,phone:phone
+				,info:function(){
+					let msg = ''
+					for(let key in this){
+						if(typeof(this[key])!='function'){
+							msg +=`${ key } : ${ this[key ]}<br>`
+						}
+					}
+					document.write(msg)
+				}
+		}
+		return person
+	}
+	
+	let person1 = makePerson('홍길동', '010-1111-2222')
+	let person2 = makePerson('고길동', '010-3333-4444')
+	
+	person1.info()
+	person2.info()
+	
+</script>
+</head>
+<body>
+	
+</body>
+</html>

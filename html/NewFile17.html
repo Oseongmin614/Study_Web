@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	body * {
+		margin: 10px;
+		padding: 10px;
+		border: 2px solid red;
+	}
+</style>
+<script>
+	window.onload = function() {
+		let div = document.querySelector('div')
+		let h1 = document.querySelector('h1')
+		let span = document.querySelector('span')
+		
+		div.onclick = function() {
+			alert('div click...')
+		}
+		
+		h1.onclick = function(e) {
+			alert('h1 click...')
+//			console.log(e)
+			e.cancelBubble = true
+		}
+		
+		span.onclick = function() {
+			alert('span click...')
+		}
+	}
+</script>
+</head>
+<body>
+	<div>
+		<h1>
+			<span>Hello</span>
+		</h1>
+	</div>
+</body>
+</html>

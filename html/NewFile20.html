@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	class Person {
+		
+		constructor(name, phone, addr) {
+			this._name = name
+			this._phone = phone
+			this._addr = addr
+		}
+		
+		// getter
+		get name() {
+			return this._name
+		}
+		
+		// setter
+		set name(name) {
+			this._name = name
+		}
+		
+		info() {
+			alert('info...')
+		}
+	}
+	
+	class Doctor extends Person {
+		constructor(name, phone, addr, major) {
+			super(name, phone, addr)
+			this._major = major
+		}
+		
+		get major() {
+			return this._major
+		}
+		
+		set major(major) {
+			this._major = major
+		}
+	}
+
+	
+	let person = new Person('홍길동', '010-1111-2222', '경기도 성남시')
+	console.log(person)
+	
+	let doctoer = new Person('이의사','010-1234-4321','서울시 강남구','성형외과')
+	console.log(doctoer)
+</script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

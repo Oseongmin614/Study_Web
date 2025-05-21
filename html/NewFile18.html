@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+
+	let selectAll = function() {
+		let hobbyArr = document.inputForm.hobby
+		for(let hobby of hobbyArr)
+			hobby.checked = true
+	}
+	
+	let clearAll = function() {
+		let hobbyArr = document.inputForm.hobby
+		for(let hobby of hobbyArr)
+			hobby.checked = false
+	}
+	
+	let showResult = function() {
+		let msg = ''
+		let hobbyArr = document.inputForm.hobby
+		for(let i in hobbyArr) {
+			if(hobbyArr[i].checked) {
+				msg += hobbyArr[i].value + '\n' 
+			}
+		}
+		alert(msg)
+	}
+
+	let toggle = function(bool) {
+		let hobbyArr = document.inputForm.hobby
+		for(let hobby of hobbyArr)
+			hobby.checked = bool
+	}
+	
+		
+	
+	window.onload = function() {
+		let selectBtn = document.getElementById("selectBtn")
+		selectBtn.addEventListener('click', selectAll)
+		
+		document.querySelector('#clearBtn').addEventListener('click', clearAll)
+		
+		document.getElementById('showBtn').addEventListener('click', showResult)
+		//document.getElementById('showBtn').onclick = showResult
+		
+		document.querySelector('#btn').addEventListener('click', function() {
+			let checked = true
+			
+			let hobbyArr = document.inputForm.hobby
+			for(hobby of hobbyArr) {
+				if(!hobby.checked) {
+					checked = false
+					break
+				}
+			}
+			for(hobby of hobbyArr) {
+				hobby.checked = !checked
+			}
+			
+			
+			/*
+			let cnt = 0
+			for(hobby of document.inputForm.hobby) {
+				if(hobby.checked) cnt++
+			}
+			for(hobby of document.inputForm.hobby) {
+				hobby.checked = !Boolean(cnt)
+			}
+			*/
+		})
+	}
+	
+	let checkForm = function() {
+	
+		let f = document.searchForm
+		
+		if(f.searchType.selectedIndex == 0) {
+			alert('검색항목을 선택하세요')
+			f.searchType.focus()
+			return false
+		}
+		
+		let keywords = ["", "제목", "작성자"]
+		if(f.searchKeyword.value == "") {
+			alert(`${keywords[f.searchType.selectedIndex]}를 입력해주세요`)
+			f.searchKeyword.focus()
+			return false
+		}
+		if(f.searchKeyword.value.length<2) {
+			alert(`2글자 이상 입력해주세요`)
+			f.searchKeyword.focus()
+			return false
+		}
+		
+		return false
+	}
+	
+</script>
+</head>
+<body>
+	<form name="searchForm" action="test.html" onsubmit="return checkForm()">
+		<select name="searchType">
+			<option>선택하세요</option>
+			<option value="title">제목</option>
+			<option value="writer">작성자</option>
+		</select>
+		<input type="text" name="searchKeyword">
+		<input type="submit" value="검색">
+	</form>		
+	<hr>
+	<form name="inputForm">
+	
+		당신의 취미는?<br>
+		<input type="checkbox" name="hobby" value="음악감상" >음악감상<br>
+		<input type="checkbox" name="hobby" value="영화감상">영화감상<br>
+		<input type="checkbox" name="hobby" value="마라톤">마라톤<br>
+		<input type="checkbox" name="hobby" value="런닝">10킬로달리기<br>
+		
+		<input type="button" value="전체선택/해제" id="btn">
+ 		
+		<input type="button" value="전체선택" id="selectBtn" onclick="toggle(true)">
+		<input type="button" value="전체해제" id="clearBtn" onclick="toggle(false)">
+	
+		<input type="button" value="전체선택" id="selectBtn" >
+		<input type="button" value="전체해제" id="clearBtn" >
+		<input type="button" value="결과보기" id="showBtn" >
+	</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

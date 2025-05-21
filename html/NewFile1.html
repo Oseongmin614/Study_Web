@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+
+	function Person(name, phone) {
+		this.name = name
+		this.phone = phone
+		this.info = function() {
+			let msg = ''
+			for(let key in this) {
+				if(typeof(this[key]) != 'function') {
+					msg += `${ key } : ${ this[key ]}<br>`
+				}
+			}
+			
+			document.write(msg)
+		}
+		
+		this.getName = () => name
+		this.setName = (n) => {name = n} 
+	}
+	
+	let p = new Person('홍길동', '010-1111-2222')
+	let p2 = new Person('고길순', '010-5555-6666')
+	
+	p.info()
+	p2.info()
+	
+	Person.prototype.show = function() {
+		alert('show()...')
+	}
+	
+	p.show()
+	p2.show()
+	
+	p.show = function() {
+		alert('show override()...')
+	}
+	
+	p.show()
+	p2.show()
+	
+	alert(p.getName())
+	p.seName('홍길동동')
+	alert(p.getName())
+	
+	
+	document.write(`p instanceof Person : ${ p instanceof Person }<br>`)
+	document.write(`p instanceof Date : ${ p instanceof Date }<br>`)
+	document.write(`p instanceof Object : ${ p instanceof Object }<br>`)
+
+</script>
+</head>
+<body>
+
+</body>
+</html>
