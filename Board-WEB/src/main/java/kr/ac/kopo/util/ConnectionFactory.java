@@ -1,7 +1,10 @@
 package kr.ac.kopo.util;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+
 public class ConnectionFactory {
+
 	public Connection getConnection()  {
 	
 		Connection conn = null;

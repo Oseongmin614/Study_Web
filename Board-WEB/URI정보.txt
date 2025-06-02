@@ -1,0 +1,5 @@
+					URI							JSP
+전체게시글 조회		/board/list.do				/board/list.jsp
+새글등록폼			/board/writeForm.do			/board/writeForm.sjp
+새글등록			/board/write.do
+상세게시글조회		/board/detail.do				

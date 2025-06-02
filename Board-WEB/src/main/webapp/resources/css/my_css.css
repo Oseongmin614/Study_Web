@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+table, th, td {
+	border: 2px solid #212529;
+	border-collapse: collapse;
+	color: #212529;
+}
+
+th, td {
+	padding: 5px;
+}
+
+td a:link, td a:visited {
+	color:#212529;
+	text-decoration: none;
+}
+
+td a:hover {
+	color:#B19CD9;
+	text-decoration: none;
+}
+
+table th {
+	background-color: #B19CD9;
+	color: #FCFCF9;
+}
+
+.button {
+  background-color:#B19CD9;   
+  color: #fff;        
+  border-radius: 6px;        
+  border: none;    
+  padding: 8px 18px; 
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(177, 156, 217, 0.08);
+  margin: 4px;
+}
+
+.button:hover, .button:focus {
+background-color: #A890FE;    
+  color: #fff;
+  border-color: #CCCCFF;
+}
+.button-group {
+  display: flex;
+  gap: 10px;          
+  justify-content: center; 
+  margin-top: 10px;
+}
+
+.modal {
+  position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; z-index: 1000;
+}
+.modal-content {
+  background: #fff; padding: 30px 40px; border-radius: 12px; text-align: center;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+
