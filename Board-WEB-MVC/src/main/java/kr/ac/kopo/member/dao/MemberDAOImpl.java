@@ -9,6 +9,10 @@ import kr.ac.kopo.util.ConnectionFactory;
 
 public class MemberDAOImpl implements MemberDAO {
 
+	public MemberDAOImpl() {
+		System.out.println("MemberDAO 객체 생성....");
+	}
+
 	@Override
 	public MemberVO selectMemberByIDPassword(MemberVO loginVO) throws Exception {
 

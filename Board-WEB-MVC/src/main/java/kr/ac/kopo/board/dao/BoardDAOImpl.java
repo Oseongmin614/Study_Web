@@ -14,6 +14,10 @@ import kr.ac.kopo.util.ConnectionFactory;
  */
 
 public class BoardDAOImpl implements BoardDAO {
+	
+	public BoardDAOImpl() {
+		System.out.println("BoardDAO 객체 생성....");
+	}
 
 	@Override
 	public List<BoardVO> selectBoardAll() {

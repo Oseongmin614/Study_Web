@@ -5,8 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/Board-WEB/resources/css/layout.css">
-<link rel="stylesheet" href="/Board-WEB/resources/css/my_css.css">
+<link rel="stylesheet" href="${ pageContxt.request.contextPath }/resources/css/layout.css">
+<link rel="stylesheet" href="${ pageContxt.request.contextPath }/resources/css/my_css.css">
 </head>
 <body>
 	<header>
@@ -17,7 +17,7 @@
 			<hr>
 			<h2>로그인</h2>
 			<hr><br>
-			<form action="/Board-WEB/loginProcess.do"> 
+			<form action="${ pageContext.request.contextPath }/loginProcess.do" method="post"> 
 				<table>
 					<tr>
 						<th>ID</th>
