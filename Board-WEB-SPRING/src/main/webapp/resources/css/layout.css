@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 15pt;
+	font-family: verdana, sans-serif;
+/* 	background-image: url("/Board-WEB/resources/images/background.png"); */
+}
+
+
+header {
+	margin: 1%;
+	margin-left: 15%;
+	margin-right: 15%;
+	height: 100px;
+}
+
+section {
+	margin-left: 17%;
+	margin-right: 17%;
+	min-height: 700px;
+}
+
+footer {
+	margin-left: 15%;
+	margin-right: 15%;
+	padding: 20px;
+	background-color: gray;	
+}
+
+
+
+
+
+
+
