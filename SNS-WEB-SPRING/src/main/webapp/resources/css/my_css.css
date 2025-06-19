@@ -1,0 +1,33 @@
+.button {
+  background: linear-gradient(90deg, #BFEFFF 0%, #E6E6FA 100%);
+  color: #6D6A7C;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(191,239,255,0.15);
+  transition: background 0.3s, color 0.3s;
+}
+
+.button:hover {
+  background: linear-gradient(90deg, #FFFACD 0%, #FFE5B4 100%);
+  color: #FF9770;
+}
+
+.card {
+  background: #FFFACD;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(255,250,205,0.13);
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.highlight {
+  background: #FFD1DC;
+  color: #6D6A7C;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+}
