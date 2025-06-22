@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reportMapper">
+  <insert id="insertReport" parameterType="reportVO">
+    INSERT INTO REPORTS (REPORTER_ID, TARGET_TYPE, TARGET_ID, REASON, DETAIL, STATUS)
+    VALUES (#{reporterId}, #{targetType}, #{targetId}, #{reason}, #{detail}, #{status})
+  </insert>
+  
+  <select id="selectReportById" parameterType="Long" resultType="reportVO">
+    SELECT R.*, U1.NICKNAME AS REPORTER_NICKNAME, U2.NICKNAME AS HANDLER_NICKNAME
+    FROM REPORTS R
+    JOIN USERS U1 ON R.REPORTER_ID = U1.USER_ID
+    LEFT JOIN USERS U2 ON R.HANDLED_BY = U2.USER_ID
+    WHERE R.REPORT_ID = #{reportId}
+  </select>
+  
+  <select id="selectAllReports" resultType="reportVO">
+    SELECT R.*, U1.NICKNAME AS REPORTER_NICKNAME, U2.NICKNAME AS HANDLER_NICKNAME
+    FROM REPORTS R
+    JOIN USERS U1 ON R.REPORTER_ID = U1.USER_ID
+    LEFT JOIN USERS U2 ON R.HANDLED_BY = U2.USER_ID
+    ORDER BY R.CREATED_AT DESC
+  </select>
+  
+  <select id="selectPendingReports" resultType="reportVO">
+    SELECT R.*, U1.NICKNAME AS REPORTER_NICKNAME
+    FROM REPORTS R
+    JOIN USERS U1 ON R.REPORTER_ID = U1.USER_ID
+    WHERE R.STATUS = 'PENDING'
+    ORDER BY R.CREATED_AT DESC
+  </select>
+  
+  <update id="updateReportStatus" parameterType="reportVO">
+    UPDATE REPORTS
+    SET STATUS = #{status},
+        HANDLED_BY = #{handledBy},
+        HANDLED_AT = SYSDATE
+    WHERE REPORT_ID = #{reportId}
+  </update>
+  
+  <select id="selectReportsByReporter" parameterType="Long" resultType="reportVO">
+    SELECT R.*, U1.NICKNAME AS REPORTER_NICKNAME, U2.NICKNAME AS HANDLER_NICKNAME
+    FROM REPORTS R
+    JOIN USERS U1 ON R.REPORTER_ID = U1.USER_ID
+    LEFT JOIN USERS U2 ON R.HANDLED_BY = U2.USER_ID
+    WHERE R.REPORTER_ID = #{reporterId}
+    ORDER BY R.CREATED_AT DESC
+  </select>
+</mapper>

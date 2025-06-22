@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="commentMapper">
+  <insert id="insertComment" parameterType="commentVO">
+    INSERT INTO COMMENTS (POST_ID, USER_ID, CONTENT, STATUS)
+    VALUES (#{postId}, #{userId}, #{content}, #{status})
+  </insert>
+  
+  <select id="selectCommentById" parameterType="Long" resultType="commentVO">
+    SELECT C.*, U.NICKNAME AS USER_NICKNAME
+    FROM COMMENTS C
+    JOIN USERS U ON C.USER_ID = U.USER_ID
+    WHERE C.COMMENT_ID = #{commentId} AND C.STATUS = 'ACTIVE'
+  </select>
+  
+  <select id="selectCommentsByPostId" parameterType="Long" resultType="commentVO">
+    SELECT C.*, U.NICKNAME AS USER_NICKNAME
+    FROM COMMENTS C
+    JOIN USERS U ON C.USER_ID = U.USER_ID
+    WHERE C.POST_ID = #{postId} AND C.STATUS = 'ACTIVE'
+    ORDER BY C.CREATED_AT ASC
+  </select>
+  
+  <update id="updateComment" parameterType="commentVO">
+    UPDATE COMMENTS
+    SET CONTENT = #{content},
+        UPDATED_AT = SYSDATE
+    WHERE COMMENT_ID = #{commentId}
+  </update>
+  
+  <update id="deleteComment" parameterType="Long">
+    UPDATE COMMENTS
+    SET STATUS = 'DELETED',
+        UPDATED_AT = SYSDATE
+    WHERE COMMENT_ID = #{commentId}
+  </update>
+  
+  <select id="selectCommentsByUserId" parameterType="Long" resultType="commentVO">
+    SELECT C.*, U.NICKNAME AS USER_NICKNAME
+    FROM COMMENTS C
+    JOIN USERS U ON C.USER_ID = U.USER_ID
+    WHERE C.USER_ID = #{userId} AND C.STATUS = 'ACTIVE'
+    ORDER BY C.CREATED_AT DESC
+  </select>
+</mapper>

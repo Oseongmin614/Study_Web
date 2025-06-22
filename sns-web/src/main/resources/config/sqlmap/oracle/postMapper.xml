@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="postMapper">
+  <insert id="insertPost" parameterType="postVO">
+    INSERT INTO POSTS (USER_ID, CONTENT, IMAGE_URL, STATUS)
+    VALUES (#{userId}, #{content}, #{imageUrl}, #{status})
+  </insert>
+  
+  <select id="selectPostById" parameterType="Long" resultType="postVO">
+    SELECT P.*, U.NICKNAME AS USER_NICKNAME
+    FROM POSTS P
+    JOIN USERS U ON P.USER_ID = U.USER_ID
+    WHERE P.POST_ID = #{postId} AND P.STATUS = 'ACTIVE'
+  </select>
+  
+  <select id="selectAllPosts" resultType="postVO">
+    SELECT P.*, U.NICKNAME AS USER_NICKNAME
+    FROM POSTS P
+    JOIN USERS U ON P.USER_ID = U.USER_ID
+    WHERE P.STATUS = 'ACTIVE'
+    ORDER BY P.CREATED_AT DESC
+  </select>
+  
+  <select id="selectPostsByUserId" parameterType="Long" resultType="postVO">
+    SELECT P.*, U.NICKNAME AS USER_NICKNAME
+    FROM POSTS P
+    JOIN USERS U ON P.USER_ID = U.USER_ID
+    WHERE P.USER_ID = #{userId} AND P.STATUS = 'ACTIVE'
+    ORDER BY P.CREATED_AT DESC
+  </select>
+  
+  <update id="updatePost" parameterType="postVO">
+    UPDATE POSTS
+    SET CONTENT = #{content},
+        IMAGE_URL = #{imageUrl},
+        UPDATED_AT = SYSDATE
+    WHERE POST_ID = #{postId}
+  </update>
+  
+  <update id="deletePost" parameterType="Long">
+    UPDATE POSTS
+    SET STATUS = 'DELETED',
+        UPDATED_AT = SYSDATE
+    WHERE POST_ID = #{postId}
+  </update>
+  
+  <insert id="insertLike" parameterType="Map">
+    INSERT INTO POST_LIKE (POST_ID, USER_ID)
+    VALUES (#{postId}, #{userId})
+  </insert>
+  
+  <delete id="deleteLike" parameterType="Map">
+    DELETE FROM POST_LIKE WHERE POST_ID = #{postId} AND USER_ID = #{userId}
+  </delete>
+  
+  <select id="checkLike" parameterType="Map" resultType="int">
+    SELECT COUNT(*) FROM POST_LIKE WHERE POST_ID = #{postId} AND USER_ID = #{userId}
+  </select>
+  
+  <update id="updateLikeCount" parameterType="Long">
+    UPDATE POSTS
+    SET LIKE_COUNT = (SELECT COUNT(*) FROM POST_LIKE WHERE POST_ID = #{postId})
+    WHERE POST_ID = #{postId}
+  </update>
+  
+  <select id="selectPostsWithPaging" parameterType="Map" resultType="postVO">
+    SELECT * FROM (
+      SELECT P.*, U.NICKNAME AS USER_NICKNAME, ROWNUM AS RN
+      FROM POSTS P
+      JOIN USERS U ON P.USER_ID = U.USER_ID
+      WHERE P.STATUS = 'ACTIVE'
+      ORDER BY P.CREATED_AT DESC
+    )
+    WHERE RN BETWEEN #{offset} + 1 AND #{offset} + #{limit}
+  </select>
+</mapper>
