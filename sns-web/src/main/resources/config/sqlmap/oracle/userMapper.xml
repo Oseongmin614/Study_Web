@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="userMapper">
+<mapper namespace="kr.ac.kopo.sns.dao.userDAO">
   <insert id="insertUser" parameterType="userVO">
     INSERT INTO USERS (EMAIL, PASSWORD, NICKNAME, PROFILE_IMG, ROLE, PROVIDER, PROVIDER_ID, STATUS)
     VALUES (#{email}, #{password}, #{nickname}, #{profileImg}, #{role}, #{provider}, #{providerId}, #{status})

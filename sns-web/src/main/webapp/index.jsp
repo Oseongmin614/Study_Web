@@ -1,131 +1,551 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>또또와 - 여름 SNS</title>
-    <link rel="stylesheet" href="/css/perplexity-layout.css">
-    <link rel="icon" href="/images/cream.png" type="image/png">
+
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/layout.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- 사이드바 include -->
-        <%@ include file="/WEB-INF/jsp/include/sidebar.jsp" %>
+    <!-- Header Include -->
+    
+    <jsp:include page="/WEB-INF/jsp/include/header.jsp" />
+    <!-- Sidebar Include -->
+    <jsp:include page="/WEB-INF/jsp/include/sidebar.jsp" />
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- Post Composer -->
+            <div class="card post-composer">
+                <div class="card__body">
+                    <div class="composer-header">
+                        <img src="${pageContext.request.contextPath}/images/default-avata.png" 
+                             alt="내 프로필" class="composer-avatar">
+                        <textarea class="composer-textarea" placeholder="무슨 일이 일어나고 있나요?"></textarea>
+                    </div>
+                    <div class="composer-actions">
+                       
+                            <button class="composer-btn">📷 사진</button>
+                           
+                        <button class="btn btn--primary">게시</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feed -->
+            <div class="feed">
+                <!-- Sample Post 1 -->
+                <article class="card post">
+                    <div class="card__body">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <img src="${pageContext.request.contextPath}/resources/images/default-avatar.jpg" 
+                                     alt="김철수" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">김철수</h4>
+                                    <time class="post-time">2시간 전</time>
+                                </div>
+                            </div>
+                            <button class="post-menu">⋯</button>
+                        </div>
+                        <div class="post-content">
+                            <p>안녕하세요! 새로운 SNS 플랫폼에 첫 포스트를 올립니다. 깔끔한 디자인이 마음에 드네요! 🎉</p>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn">👍 좋아요</button>
+                            <button class="action-btn">💬 댓글</button>
+                            <button class="action-btn">📤 공유</button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Sample Post 2 -->
+                <article class="card post">
+                    <div class="card__body">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <img src="${pageContext.request.contextPath}/resources/images/default-avatar.jpg" 
+                                     alt="이영희" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">이영희</h4>
+                                    <time class="post-time">5시간 전</time>
+                                </div>
+                            </div>
+                            <button class="post-menu">⋯</button>
+                        </div>
+                        <div class="post-content">
+                            <p>오늘 날씨가 정말 좋네요! 산책하기 완벽한 날이에요 ☀️🌸</p>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn">👍 좋아요</button>
+                            <button class="action-btn">💬 댓글</button>
+                            <button class="action-btn">📤 공유</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Include -->
+
+<jsp:include page="/WEB-INF/jsp/include/footer.jsp" />
+    <!-- JavaScript 코드 -->
+    <script>
+        // DOM이 로드된 후 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            // 요소들 가져오기
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // 초기화 함수 실행
+            initializeApp();
+            
+            // 모바일 메뉴 토글 기능
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    menuToggle.classList.toggle('active');
+                    sidebar.classList.toggle('active');
+                });
+                
+                // 사이드바 외부 클릭 시 사이드바 닫기 (모바일에서만)
+                document.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+                        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                            sidebar.classList.remove('active');
+                            menuToggle.classList.remove('active');
+                        }
+                    }
+                });
+            }
+            
+            // 네비게이션 링크 active 상태 관리
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // 모든 링크에서 active 클래스 제거
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    // 클릭된 링크에 active 클래스 추가
+                    this.classList.add('active');
+                    
+                    // 모바일에서 사이드바 닫기
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
+                    
+                    // 페이지 내용 시뮬레이션
+                    const url = this.getAttribute('href');
+                    const pageName = this.querySelector('.nav-text').textContent;
+                    simulatePageChange(url, pageName);
+                });
+            });
+            
+            // 윈도우 리사이즈 이벤트
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    sidebar.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+        });
         
-        <!-- 메인 콘텐츠 영역 -->
-        <main class="main-content">
-            <!-- 헤더 섹션 -->
-            <header style="margin-bottom: 40px;">
-                <h1 style="font-size: 2.5rem; font-weight: 700; color: #1f2937; margin-bottom: 16px;">
-                    환영합니다! <span style="color: #667eea;">또또와</span>에서
-                </h1>
-                <p style="font-size: 1.2rem; color: #6b7280; line-height: 1.8; max-width: 800px;">
-                    시원하고 달콤한 여름, <strong style="color: #667eea;">또또와</strong>에서 새로운 친구들과 함께 
-                    즐거운 추억을 만들어보세요. 다채로운 이야기와 생생한 소통이 여러분을 기다립니다.
-                </p>
-            </header>
-
-            <!-- 피처 카드 섹션 -->
-            <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-bottom: 48px;">
-                <!-- 피드 카드 -->
-                <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); border: 1px solid #f3f4f6;">
-                    <div style="display: flex; align-items: center; margin-bottom: 16px;">
-                        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14,2 14,8 20,8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">최신 피드</h3>
-                    </div>
-                    <p style="color: #6b7280; line-height: 1.6;">친구들의 새로운 소식과 재미있는 이야기들을 확인해보세요.</p>
-                    <a href="/feed.jsp" style="display: inline-flex; align-items: center; margin-top: 16px; color: #667eea; text-decoration: none; font-weight: 500;">
-                        피드 보기 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 4px;">
-                            <polyline points="9 18 15 12 9 6"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- 인기글 카드 -->
-                <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); border: 1px solid #f3f4f6;">
-                    <div style="display: flex; align-items: center; margin-bottom: 16px;">
-                        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #f093fb, #f5576c); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">인기글</h3>
-                    </div>
-                    <p style="color: #6b7280; line-height: 1.6;">지금 가장 화제가 되고 있는 글들을 만나보세요.</p>
-                    <a href="/popular.jsp" style="display: inline-flex; align-items: center; margin-top: 16px; color: #f5576c; text-decoration: none; font-weight: 500;">
-                        인기글 보기 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 4px;">
-                            <polyline points="9 18 15 12 9 6"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- 채팅 카드 -->
-                <div style="background: white; border-radius: 16px; padding: 24px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); border: 1px solid #f3f4f6;">
-                    <div style="display: flex; align-items: center; margin-bottom: 16px;">
-                        <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #4facfe, #00f2fe); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-right: 16px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                            </svg>
-                        </div>
-                        <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">실시간 채팅</h3>
-                    </div>
-                    <p style="color: #6b7280; line-height: 1.6;">친구들과 실시간으로 대화하고 소통해보세요.</p>
-                    <a href="/chat.jsp" style="display: inline-flex; align-items: center; margin-top: 16px; color: #00f2fe; text-decoration: none; font-weight: 500;">
-                        채팅하기 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 4px;">
-                            <polyline points="9 18 15 12 9 6"/>
-                        </svg>
-                    </a>
-                </div>
-            </section>
-
-            <!-- 로고 섹션 -->
-            <section style="text-align: center; margin-bottom: 48px;">
-                <div style="display: inline-block; padding: 32px; background: white; border-radius: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12); border: 1px solid #f3f4f6;">
-                    <img src="/images/cream.png" alt="또또와 메인 로고" 
-                         style="width: 120px; height: 120px; border-radius: 20px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); margin-bottom: 16px;">
-                    <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 8px;">또또와</h2>
-                    <p style="color: #6b7280; font-size: 1rem;">여름처럼 상쾌한 SNS</p>
-                </div>
-            </section>
-
-            <!-- 통계 섹션 -->
-            <section style="background: white; border-radius: 16px; padding: 32px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); border: 1px solid #f3f4f6;">
-                <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 24px; text-align: center;">또또와 통계</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px;">
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 800; color: #667eea; margin-bottom: 8px;">1,234</div>
-                        <div style="color: #6b7280; font-size: 0.9rem;">활성 사용자</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 800; color: #f5576c; margin-bottom: 8px;">5,678</div>
-                        <div style="color: #6b7280; font-size: 0.9rem;">총 게시글</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 800; color: #00f2fe; margin-bottom: 8px;">9,012</div>
-                        <div style="color: #6b7280; font-size: 0.9rem;">좋아요</div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: 800; color: #a8e6cf; margin-bottom: 8px;">3,456</div>
-                        <div style="color: #6b7280; font-size: 0.9rem;">댓글</div>
-                    </div>
-                </div>
-            </section>
-        </main>
+        // 앱 초기화 함수
+        function initializeApp() {
+            // 초기 이벤트 리스너 등록
+            bindEventListeners();
+            // 검색 기능 초기화
+            initializeSearch();
+            // 사용자 프로필 초기화
+            initializeUserProfile();
+        }
         
-        <!-- 푸터 include -->
-        <%@ include file="/WEB-INF/jsp/include/footer.jsp" %>
-    </div>
+        // 이벤트 리스너 바인딩
+        function bindEventListeners() {
+            // 포스트 작성 기능
+            const postBtn = document.querySelector('.btn--primary');
+            const postComposer = document.querySelector('.composer-textarea');
+            
+            if (postBtn && postComposer) {
+                // 기존 이벤트 리스너 제거 후 새로 등록
+                postBtn.replaceWith(postBtn.cloneNode(true));
+                const newPostBtn = document.querySelector('.btn--primary');v
+                
+                newPostBtn.addEventListener('click', function() {
+                    const content = postComposer.value.trim();
+                    if (content) {
+                        createPost(content);
+                        postComposer.value = '';
+                        postComposer.style.height = '60px';
+                        showNotification('포스트가 성공적으로 게시되었습니다!', 'success');
+                    } else {
+                        showNotification('내용을 입력해주세요.', 'warning');
+                    }
+                });
+                
+                // 텍스트 영역 자동 크기 조정
+                postComposer.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.max(60, this.scrollHeight) + 'px';
+                });
+            }
+            
+            // 포스트 액션 버튼들
+            const actionButtons = document.querySelectorAll('.post-actions .action-btn');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.textContent.trim();
+                    handlePostAction(action, this);
+                });
+            });
+            
+            // 컴포저 버튼들
+            const composerButtons = document.querySelectorAll('.composer-btn');
+            composerButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const action = this.textContent.trim();
+                    handleComposerAction(action);
+                });
+            });
+        }
+        
+        // 검색 기능 초기화
+        function initializeSearch() {
+            const searchBtn = document.querySelector('.search-btn');
+            const searchInput = document.querySelector('.search-input');
+            
+            if (searchBtn && searchInput) {
+                const handleSearch = () => {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        showNotification(`"${query}"을(를) 검색합니다...`, 'info');
+                        searchInput.value = '';
+                    }
+                };
+                
+                searchBtn.addEventListener('click', handleSearch);
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        handleSearch();
+                    }
+                });
+            }
+        }
+        
+        // 사용자 프로필 초기화
+        function initializeUserProfile() {
+            const userProfile = document.querySelector('.user-profile');
+            const actionBtns = document.querySelectorAll('.header .action-btn');
+            
+            if (userProfile) {
+                userProfile.addEventListener('click', function() {
+                    showNotification('프로필 메뉴를 열었습니다.', 'info');
+                });
+            }
+            
+            // 헤더 액션 버튼들
+            actionBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const btnText = this.textContent.trim();
+                    if (btnText === '📬') {
+                        showNotification('메시지를 확인합니다.', 'info');
+                    } else if (btnText === '🔔') {
+                        showNotification('알림을 확인합니다.', 'info');
+                    }
+                });
+            });
+        }
+        
+        // 포스트 생성 함수
+        function createPost(content) {
+            const feed = document.querySelector('.feed');
+            if (!feed) return;
+            
+            const currentTime = new Date().toLocaleString('ko-KR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            const postHTML = `
+                <article class="card post">
+                    <div class="card__body">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <img src="${pageContext.request.contextPath}/resources/images/default-avatar.jpg" 
+                                     alt="나" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">나</h4>
+                                    <time class="post-time">방금 전</time>
+                                </div>
+                            </div>
+                            <button class="post-menu">⋯</button>
+                        </div>
+                        <div class="post-content">
+                            <p>${content}</p>
+                        </div>
+                        <div class="post-actions">
+                            <button class="action-btn">👍 좋아요</button>
+                            <button class="action-btn">💬 댓글</button>
+                            <button class="action-btn">📤 공유</button>
+                        </div>
+                    </div>
+                </article>
+            `;
+            
+            feed.insertAdjacentHTML('afterbegin', postHTML);
+            bindEventListeners(); // 새로운 요소들에 이벤트 리스너 재등록
+        }
+        
+        // 포스트 액션 처리
+        function handlePostAction(action, button) {
+            if (action.includes('좋아요')) {
+                button.classList.toggle('liked');
+                showNotification('좋아요!', 'success');
+            } else if (action.includes('댓글')) {
+                showNotification('댓글 기능을 준비중입니다.', 'info');
+            } else if (action.includes('공유')) {
+                showNotification('공유 기능을 준비중입니다.', 'info');
+            }
+        }
+        
+        // 컴포저 액션 처리
+        function handleComposerAction(action) {
+            if (action.includes('사진')) {
+                showNotification('사진 업로드 기능을 준비중입니다.', 'info');
+            } else if (action.includes('동영상')) {
+                showNotification('동영상 업로드 기능을 준비중입니다.', 'info');
+            } else if (action.includes('기분')) {
+                showNotification('기분 표현 기능을 준비중입니다.', 'info');
+            } else if (action.includes('위치')) {
+                showNotification('위치 태그 기능을 준비중입니다.', 'info');
+            }
+        }
+        
+        // 알림 표시 함수
+        function showNotification(message, type = 'info') {
+            // 기존 알림 제거
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // 새 알림 생성
+            const notification = document.createElement('div');
+            notification.className = `notification status status--${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                z-index: 10000;
+                padding: 12px 20px;
+                border-radius: 8px;
+                font-weight: 500;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                transition: all 0.3s ease;
+                transform: translateX(100%);
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // 애니메이션으로 표시
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // 3초 후 자동 제거
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // 페이지 변경 시뮬레이션
+        function simulatePageChange(url, pageName) {
+            const mainContent = document.querySelector('.content-wrapper');
+            if (!mainContent) return;
+            
+            // 로딩 효과
+            mainContent.style.opacity = '0.5';
+            mainContent.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                // 페이지별 컨텐츠 생성
+                let content = '';
+                switch(url) {
+                    case '/':
+                    case '${pageContext.request.contextPath}/':
+                        content = getHomeContent();
+                        break;
+                    case '${pageContext.request.contextPath}/feed':
+                        content = getFeedContent();
+                        break;
+                    case '${pageContext.request.contextPath}/profile':
+                        content = getProfileContent();
+                        break;
+                    case '${pageContext.request.contextPath}/messages':
+                        content = getMessagesContent();
+                        break;
+                    case '${pageContext.request.contextPath}/notifications':
+                        content = getNotificationsContent();
+                        break;
+                    case '${pageContext.request.contextPath}/settings':
+                        content = getSettingsContent();
+                        break;
+                    default:
+                        content = getDefaultContent(pageName);
+                }
+                
+                mainContent.innerHTML = content;
+                mainContent.style.opacity = '1';
+                
+                // 새로운 컨텐츠의 이벤트 리스너 재등록
+                setTimeout(() => {
+                    bindEventListeners();
+                }, 100);
+            }, 300);
+        }
+        
+        // 페이지별 컨텐츠 생성 함수들
+        function getHomeContent() {
+            return document.querySelector('.content-wrapper').innerHTML; // 현재 홈 컨텐츠 유지
+        }
+        
+        function getFeedContent() {
+            return `
+                <div class="card">
+                    <div class="card__body">
+                        <h2>피드</h2>
+                        <p>친구들의 최신 소식을 확인해보세요.</p>
+                        <div class="feed">
+                            <article class="card post">
+                                <div class="card__body">
+                                    <div class="post-header">
+                                        <div class="post-author">
+                                            <img src="${pageContext.request.contextPath}/resources/images/default-avatar.jpg" alt="박민수" class="author-avatar">
+                                            <div class="author-info">
+                                                <h4 class="author-name">박민수</h4>
+                                                <time class="post-time">1시간 전</time>
+                                            </div>
+                                        </div>
+                                        <button class="post-menu">⋯</button>
+                                    </div>
+                                    <div class="post-content">
+                                        <p>새로운 프로젝트를 시작했습니다! 멋진 웹 애플리케이션을 만들어보겠습니다 💻✨</p>
+                                    </div>
+                                    <div class="post-actions">
+                                        <button class="action-btn">👍 좋아요</button>
+                                        <button class="action-btn">💬 댓글</button>
+                                        <button class="action-btn">📤 공유</button>
+                                    </div>
+                                </div>
+                            </article>
+                            <article class="card post">
+                                <div class="card__body">
+                                    <div class="post-header">
+                                        <div class="post-author">
+                                            <img src="${pageContext.request.contextPath}/resources/images/default-avatar.jpg" alt="정수연" class="author-avatar">
+                                            <div class="author-info">
+                                                <h4 class="author-name">정수연</h4>
+                                                <time class="post-time">3시간 전</time>
+                                            </div>
+                                        </div>
+                                        <button class="post-menu">⋯</button>
+                                    </div>
+                                    <div class="post-content">
+                                        <p>오늘 점심은 맛있는 파스타를 먹었어요! 정말 행복한 하루 🍝😋</p>
+                                    </div>
+                                    <div class="post-actions">
+                                        <button class="action-btn">👍 좋아요</button>
+                                        <button class="action-btn">💬 댓글</button>
+                                        <button class="action-btn">📤 공유</button>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getProfileContent() {
+            return `
+                <div class="card">
+                    <div class="card__body">
+                        <h2>프로필</h2>
+                        <p>내 프로필을 관리하세요.</p>
+                        <div class="profile-info">
+                            <img src="${pageContext.request.contextPath}/resources/images/default-avatar.jpg" alt="내 프로필" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 16px;">
+                            <h3>MySNS 사용자</h3>
+                            <p>안녕하세요! MySNS를 이용해주셔서 감사합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getMessagesContent() {
+            return `
+                <div class="card">
+                    <div class="card__body">
+                        <h2>메시지</h2>
+                        <p>친구들과 대화해보세요.</p>
+                        <div class="message-placeholder">
+                            <p>메시지 기능을 준비중입니다. 곧 사용하실 수 있습니다!</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getNotificationsContent() {
+            return `
+                <div class="card">
+                    <div class="card__body">
+                        <h2>알림</h2>
+                        <p>새로운 알림을 확인하세요.</p>
+                        <div class="notification-placeholder">
+                            <p>새로운 알림이 없습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getSettingsContent() {
+            return `
+                <div class="card">
+                    <div class="card__body">
+                        <h2>설정</h2>
+                        <p>계정 및 개인정보 설정을 관리하세요.</p>
+                        <div class="settings-placeholder">
+                            <p>설정 기능을 준비중입니다. 곧 사용하실 수 있습니다!</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getDefaultContent(pageName) {
+            return `
+                <div class="card">
+                    <div class="card__body">
+                        <h2>${pageName}</h2>
+                        <p>이 페이지는 개발 중입니다.</p>
+                        <p>${pageName} 기능을 준비중입니다. 곧 사용하실 수 있습니다!</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>
